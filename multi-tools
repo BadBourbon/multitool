@@ -1,0 +1,28 @@
+#!/usr/bin/python3.8
+#coding:utf-8
+
+import subprocess
+import sys
+import os
+
+subprocess.call("adapter_name.sh")
+
+print('Select number option script')
+print('1.search 2.test')
+
+with open('nifter') as file:
+    inter = str(file.readline().rstrip())
+
+nameport = inter
+value_one = 1
+value_two = 2
+x = int(input())
+
+if x == value_one:
+    z = (input('specify the number of ports '))
+    subprocess.call(['ipsearch.sh', '%s' % str(nameport), '%s' % str(z)])
+elif x == value_two:      
+        w = (input('enter port number '))
+        subprocess.call(['testport.sh', '%s' % str(nameport), '%s' % str(w)])
+else:
+    print('Invalid script operation')
