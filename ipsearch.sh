@@ -1,50 +1,48 @@
 #!/bin/bash
-
-
+#Defines the network address of the physical network port
 
 if grep -qvP "^$" <<< $1;
 
 then
 
-	adapter_name=${1};
+  adapter_name=${1};
 
-	if grep -qP "^\d+$" <<< $2;
+  if grep -qP "^\d+$" <<< $2;
 
-	then
+    then
+    
+      iface_count=${2};
+      
+    else
+      
+      echo "Use ipbrut.sh --help for usage info";
 
-		iface_count=${2};
-	else
+    exit 1;
 
-		echo "Use ipbrut.sh --help for usage info";
-
-		exit 1;
-
-	fi
+  fi
 
 elif grep -qP -- "--help" <<< $1;
 
-then
+  then
 
-	echo "sudo ipbrut.sh ADAPTER_NAME, IFACE_NAME";
+    echo "sudo ipbrut.sh ADAPTER_NAME, IFACE_NAME";
 
-	exit 0;
+  exit 0;
 
 else
 
-	echo "Use ipbrut.sh --help for usage info";
+  echo "Use ipbrut.sh --help for usage info";
 
-	exit 1;
+exit 1;
 
 fi
 
-
-
 for ((i = 1; i <= iface_count; i++));
 
-do
+  do
 
-	ifconfig $adapter_name '192.168.'${i}'.10/24';
+    ifconfig $adapter_name '192.168.'${i}'.10/24';
 
-	ping 192.168.${i}.1 -c 1 -W 1 | grep -A1 statistics;
+    ping 192.168.${i}.1 -c 1 -W 1 | grep -A1 statistics;
 
 done
